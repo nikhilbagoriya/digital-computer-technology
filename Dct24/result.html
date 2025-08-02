@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Test Results & Performance Analysis | DCT24 Online Exam Portal</title>
+    <meta name="title" content="Test Results & Performance Analysis | DCT24 Online Exam Portal">
+    <meta name="description" content="View your RS-CIT and CCC test results, detailed performance analysis, and improvement suggestions. Track your progress with DCT24's comprehensive result analysis system.">
+    <meta name="keywords" content="RS-CIT results, CCC test score, exam analysis, performance tracking, DCT24 results, computer course results, Kotputli">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dct24.digitalcomputertechnology.in/result.html">
+    <meta property="og:title" content="Test Results & Performance Analysis | DCT24 Online Exam Portal">
+    <meta property="og:description" content="View your RS-CIT and CCC test results, detailed performance analysis, and improvement suggestions. Track your progress with DCT24.">
+    <meta property="og:image" content="https://dct24.digitalcomputertechnology.in/favicon/android-chrome-512x512.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dct24.digitalcomputertechnology.in/result.html">
+    <meta property="twitter:title" content="Test Results & Performance Analysis | DCT24 Online Exam Portal">
+    <meta property="twitter:description" content="View your RS-CIT and CCC test results, detailed performance analysis, and improvement suggestions. Track your progress with DCT24.">
+    <meta property="twitter:image" content="https://dct24.digitalcomputertechnology.in/favicon/android-chrome-512x512.png">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+
+    <link rel="stylesheet" href="styles/result.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "DCT24 Test Results",
+      "description": "View and analyze your computer course test results",
+      "provider": {
+        "@type": "Organization",
+        "name": "DCT24 - Digital Computer Technology",
+        "url": "https://dct24.digitalcomputertechnology.in"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "Computer Course Test Results"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Students"
+      }
+    }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html"><i class="fas fa-graduation-cap"></i> Dct24</a></h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#courses">Courses</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <span class="user-info" id="userInfo">Exam Complete</span>
+                <button id="logoutBtn" class="btn btn-secondary" style="display: none;">Logout</button>
+                <button id="loginBtn" class="btn btn-primary" style="display: none;">Login</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Result Content -->
+    <main class="result-container">
+        <div class="container">
+            <!-- Loading -->
+            <div class="loading-spinner" id="resultLoading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Calculating your results...</p>
+            </div>
+
+            <!-- Result Display -->
+            <div class="result-content" id="resultContent" style="display: none;">
+                <!-- Result Header -->
+                <div class="result-header">
+                    <div class="result-icon" id="resultIcon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h1 id="resultTitle">Congratulations!</h1>
+                    <p id="resultSubtitle">You have successfully completed the exam</p>
+                </div>
+
+                <!-- Score Display -->
+                <div class="score-section">
+                    <div class="score-circle">
+                        <div class="score-inner">
+                            <span class="score-percentage" id="scorePercentage">85%</span>
+                            <span class="score-label">Score</span>
+                        </div>
+                    </div>
+                    <div class="score-details">
+                        <div class="score-item">
+                            <span class="score-value" id="correctAnswers">17</span>
+                            <span class="score-text">Correct</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-value" id="incorrectAnswers">3</span>
+                            <span class="score-text">Incorrect</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-value" id="totalQuestions">20</span>
+                            <span class="score-text">Total</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Summary -->
+                <div class="summary-section">
+                    <h3>Exam Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <i class="fas fa-clock"></i>
+                            <h4>Time Taken</h4>
+                            <p id="timeTaken">4 min 32 sec</p>
+                        </div>
+                        <div class="summary-card">
+                            <i class="fas fa-calendar"></i>
+                            <h4>Date</h4>
+                            <p id="examDate">Dec 24, 2024</p>
+                        </div>
+                        <div class="summary-card">
+                            <i class="fas fa-user"></i>
+                            <h4>Student</h4>
+                            <p id="studentName">John Doe</p>
+                        </div>
+                        <div class="summary-card">
+                            <i class="fas fa-medal"></i>
+                            <h4>Grade</h4>
+                            <p id="examGrade">A</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="analysis-section">
+                    <h3>Detailed Analysis</h3>
+                    <div class="analysis-content">
+                        <div class="chart-container">
+                            <canvas id="performanceChart" width="300" height="300"></canvas>
+                        </div>
+                        <div class="performance-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Accuracy Rate:</span>
+                                <span class="stat-value" id="accuracyRate">85%</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Questions Attempted:</span>
+                                <span class="stat-value" id="attemptedQuestions">20/20</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Average Time per Question:</span>
+                                <span class="stat-value" id="avgTimePerQuestion">13.6 sec</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Difficulty Level:</span>
+                                <span class="stat-value">Medium</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Review -->
+                <div class="review-section">
+                    <h3>Question Review</h3>
+                    <div class="review-controls">
+                        <button class="btn btn-secondary" id="showCorrectBtn">Show Correct Only</button>
+                        <button class="btn btn-secondary" id="showIncorrectBtn">Show Incorrect Only</button>
+                        <button class="btn btn-primary" id="showAllBtn">Show All</button>
+                    </div>
+                    <div class="questions-review" id="questionsReview">
+                        <!-- Questions will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="result-actions">
+                    <button class="btn btn-outline" id="goHomeBtn">
+                        <i class="fas fa-home"></i> Back to Home
+                    </button>
+                    <button class="btn btn-info" id="questionSummaryBtn">
+                        <i class="fas fa-list-alt"></i> Question Summary
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Question Summary Modal -->
+    <div class="modal" id="questionSummaryModal" style="display: none;">
+        <div class="modal-content question-summary-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-list-alt"></i> Question Summary</h2>
+                <button class="close-btn" onclick="closeSummaryModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="summary-filters">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-list"></i> All Questions
+                    </button>
+                    <button class="filter-btn" data-filter="correct">
+                        <i class="fas fa-check-circle"></i> Correct Only
+                    </button>
+                    <button class="filter-btn" data-filter="incorrect">
+                        <i class="fas fa-times-circle"></i> Incorrect Only
+                    </button>
+                    <button class="filter-btn" data-filter="unanswered">
+                        <i class="fas fa-question-circle"></i> Unanswered Only
+                    </button>
+                </div>
+                <div class="questions-summary-container" id="questionsSummaryContainer">
+                    <!-- Questions summary will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSummaryModal()">Close</button>
+                <button class="btn btn-primary" id="printSummaryBtn">
+                    <i class="fas fa-print"></i> Print Summary
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div class="modal" id="certificateModal" style="display: none;">
+        <div class="modal-content certificate-modal">
+            <div class="certificate">
+                <div class="certificate-header">
+                    <h2>Certificate of Achievement</h2>
+                    <div class="certificate-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Dct24</span>
+                    </div>
+                </div>
+                <div class="certificate-body">
+                    <h3>This is to certify that</h3>
+                    <h1 class="student-name" id="certificateStudentName">John Doe</h1>
+                    <h3>has successfully completed the</h3>
+                    <h2 class="course-name">Online Assessment</h2>
+                    <div class="certificate-details">
+                        <p>Score: <span id="certificateScore">85%</span></p>
+                        <p>Date: <span id="certificateDate">December 24, 2024</span></p>
+                        <p>Grade: <span id="certificateGrade">A</span></p>
+                    </div>
+                </div>
+                <div class="certificate-footer">
+                    <div class="signature">
+                        <p>Director, Dct24</p>
+                    </div>
+                    <div class="certificate-id">
+                        <p>Certificate ID: <span id="certificateId">GJ24-2024-001</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="closeCertificateBtn">Close</button>
+                <button class="btn btn-primary" id="downloadPdfBtn">Download PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/result.js"></script>
+</body>
+</html> 

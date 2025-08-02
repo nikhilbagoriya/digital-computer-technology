@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /sitemap.xml
+
+# Disallow admin and test-related pages
+Disallow: /admin.html
+Disallow: /test-login.html
+Disallow: /welcome-test.html
+
+# Sitemap location
+Sitemap: https://dct24.digitalcomputertechnology.in/sitemap.xml 

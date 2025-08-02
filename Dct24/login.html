@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Student Login - Access Your DCT24 Online Test Account | RS-CIT & CCC</title>
+    <meta name="title" content="Student Login - Access Your DCT24 Online Test Account | RS-CIT & CCC">
+    <meta name="description" content="Login to your DCT24 student account to access RS-CIT and CCC online tests, track your progress, and view detailed performance analysis. Best computer training institute in Kotputli.">
+    <meta name="keywords" content="DCT24 login, student login, RS-CIT test login, CCC exam login, computer course login, Kotputli computer institute">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dct24.digitalcomputertechnology.in/login.html">
+    <meta property="og:title" content="Student Login - Access Your DCT24 Online Test Account">
+    <meta property="og:description" content="Login to your DCT24 student account to access RS-CIT and CCC online tests, track your progress, and view detailed performance analysis.">
+    <meta property="og:image" content="https://dct24.digitalcomputertechnology.in/favicon/android-chrome-512x512.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dct24.digitalcomputertechnology.in/login.html">
+    <meta property="twitter:title" content="Student Login - Access Your DCT24 Online Test Account">
+    <meta property="twitter:description" content="Login to your DCT24 student account to access RS-CIT and CCC online tests, track your progress, and view detailed performance analysis.">
+    <meta property="twitter:image" content="https://dct24.digitalcomputertechnology.in/favicon/android-chrome-512x512.png">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+
+    <link rel="stylesheet" href="styles/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "DCT24 Student Login",
+      "description": "Login page for DCT24 students to access online tests and course materials",
+      "provider": {
+        "@type": "Organization",
+        "name": "DCT24 - Digital Computer Technology",
+        "url": "https://dct24.digitalcomputertechnology.in"
+      },
+      "offers": {
+        "@type": "Offer",
+        "category": "Computer Courses",
+        "availability": "https://schema.org/OnlineOnly"
+      }
+    }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1 style="text-align: center;"><a href="index.html"><i class="fas fa-graduation-cap"></i> Dct24</a></h1>
+            </div>
+            <nav class="nav" style="display: none;">
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2 id="authTitle">Welcome Back</h2>
+                <p id="authSubtitle">Sign in to your account</p>
+            </div>
+
+            <!-- Social Login -->
+            <div class="social-login" style="margin-top: 2rem;">
+                <button class="btn btn-social" id="googleLogin">
+                    <i class="fab fa-google"></i>
+                    <span class="btn-text">Continue with Google</span>
+                    <i class="fas fa-spinner fa-spin loading-icon" style="display: none;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/login.js"></script>
+</body>
+</html> 

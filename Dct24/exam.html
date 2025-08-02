@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>RS-CIT & CCC Online Test Series | Practice Tests | DCT24</title>
+    <meta name="title" content="RS-CIT & CCC Online Test Series | Practice Tests | DCT24">
+    <meta name="description" content="Practice with our comprehensive RS-CIT and CCC online test series. Get instant results, detailed analysis and improve your exam preparation with DCT24's practice tests.">
+    <meta name="keywords" content="RS-CIT test series, CCC practice test, online exam preparation, computer course test, DCT24 mock test, Kotputli computer exam">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dct24.digitalcomputertechnology.in/exam.html">
+    <meta property="og:title" content="RS-CIT & CCC Online Test Series | Practice Tests | DCT24">
+    <meta property="og:description" content="Practice with our comprehensive RS-CIT and CCC online test series. Get instant results, detailed analysis and improve your exam preparation.">
+    <meta property="og:image" content="https://dct24.digitalcomputertechnology.in/favicon/android-chrome-512x512.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dct24.digitalcomputertechnology.in/exam.html">
+    <meta property="twitter:title" content="RS-CIT & CCC Online Test Series | Practice Tests | DCT24">
+    <meta property="twitter:description" content="Practice with our comprehensive RS-CIT and CCC online test series. Get instant results, detailed analysis and improve your exam preparation.">
+    <meta property="twitter:image" content="https://dct24.digitalcomputertechnology.in/favicon/android-chrome-512x512.png">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+
+    <link rel="stylesheet" href="styles/exam.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LearningResource",
+      "name": "RS-CIT & CCC Online Test Series",
+      "description": "Comprehensive practice tests for RS-CIT and CCC computer courses",
+      "provider": {
+        "@type": "Organization",
+        "name": "DCT24 - Digital Computer Technology",
+        "url": "https://dct24.digitalcomputertechnology.in"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Computer Course Students"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "Computer Course Examination"
+      },
+      "educationalLevel": "Beginner to Advanced",
+      "teaches": ["RS-CIT", "CCC", "Computer Skills"],
+      "timeRequired": "PT90M"
+    }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html"><i class="fas fa-graduation-cap"></i> Dct24</a></h1>
+            </div>
+            <div class="exam-info">
+                <div class="timer-display">
+                    <i class="fas fa-clock"></i>
+                    <span id="timerDisplay">05:00</span>
+                </div>
+                <div class="question-counter">
+                    <span id="currentQuestion">1</span> / <span id="totalQuestions">10</span>
+                </div>
+            </div>
+            <div class="auth-buttons">
+                <span class="user-info" id="userInfo">Taking Exam</span>
+                <button id="logoutBtn" class="btn btn-secondary" style="display: none;">Logout</button>
+                <button id="loginBtn" class="btn btn-primary" style="display: none;">Login</button>
+                <button id="submitExamBtn" class="btn btn-warning">Submit Exam</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Exam Content -->
+    <main class="exam-container">
+        <div class="container">
+            <!-- Exam Header -->
+            <div class="exam-header">
+                <h2>Online Assessment</h2>
+                <div class="exam-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">Question 1 of 10</span>
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading-spinner" id="examLoading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading exam questions...</p>
+            </div>
+
+            <!-- Exam Details -->
+            <div class="exam-details">
+                <ul>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        Duration: <span class="highlight">30 minutes</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-list-ol"></i>
+                        Questions: <span class="highlight">30</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        Passing Marks: <span class="highlight">60%</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Exam Questions -->
+            <div class="exam-content" id="examContent" style="display: none;">
+                <div class="question-section">
+                    <div class="question-card">
+                        <div class="question-header">
+                            <h3 id="questionText">Question will appear here</h3>
+                        </div>
+                        <div class="options-container">
+                            <div class="option-item" data-option="0">
+                                <input type="radio" name="answer" value="0" id="option0">
+                                <label for="option0" class="option-label">
+                                    <span class="option-letter">A</span>
+                                    <span class="option-text" id="optionText0">Option A</span>
+                                </label>
+                            </div>
+                            <div class="option-item" data-option="1">
+                                <input type="radio" name="answer" value="1" id="option1">
+                                <label for="option1" class="option-label">
+                                    <span class="option-letter">B</span>
+                                    <span class="option-text" id="optionText1">Option B</span>
+                                </label>
+                            </div>
+                            <div class="option-item" data-option="2">
+                                <input type="radio" name="answer" value="2" id="option2">
+                                <label for="option2" class="option-label">
+                                    <span class="option-letter">C</span>
+                                    <span class="option-text" id="optionText2">Option C</span>
+                                </label>
+                            </div>
+                            <div class="option-item" data-option="3">
+                                <input type="radio" name="answer" value="3" id="option3">
+                                <label for="option3" class="option-label">
+                                    <span class="option-letter">D</span>
+                                    <span class="option-text" id="optionText3">Option D</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="exam-navigation">
+                    <button class="btn btn-secondary" id="prevBtn" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <div class="question-nav">
+                        <div class="question-grid" id="questionGrid">
+                            <!-- Question numbers will be generated here -->
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="nextBtn">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exam Summary (Hidden initially) -->
+            <div class="exam-summary" id="examSummary" style="display: none;">
+                <div class="summary-card">
+                    <h3>Exam Summary</h3>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Questions:</span>
+                            <span class="stat-value" id="summaryTotal">10</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Answered:</span>
+                            <span class="stat-value" id="summaryAnswered">8</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Unanswered:</span>
+                            <span class="stat-value" id="summaryUnanswered">2</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Time Remaining:</span>
+                            <span class="stat-value" id="summaryTime">02:30</span>
+                        </div>
+                    </div>
+                    <div class="summary-actions">
+                        <button class="btn btn-secondary" id="reviewBtn">Review Answers</button>
+                        <button class="btn btn-success" id="finalSubmitBtn">Final Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Warning Dialog for Page Refresh/Close -->
+    <div class="warning-overlay" id="warningOverlay" style="display: none;">
+        <div class="warning-dialog">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Warning!</h3>
+            <p>Your exam is in progress. Leaving this page will auto-submit your exam.</p>
+            <div class="warning-actions">
+                <button class="btn btn-secondary" id="stayBtn">Stay on Page</button>
+                <button class="btn btn-danger" id="leaveBtn">Leave & Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/questions.js"></script>
+    <script type="module" src="js/exam.js"></script>
+    
+    <!-- Initialize Exam from URL Parameter -->
+    <script type="module">
+        import examManager from './js/exam.js';
+        import questionsManager from './js/questions.js';
+        
+        // Get exam type from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const examType = urlParams.get('type');
+        
+        console.log('🎯 Exam page loaded with type:', examType);
+        console.log('🔧 ExamManager available:', !!examManager);
+        console.log('🔧 QuestionsManager available:', !!questionsManager);
+        
+        // Make managers globally available for debugging
+        window.examManager = examManager;
+        window.questionsManager = questionsManager;
+        
+        if (examType) {
+            // Function to start exam
+            const startExam = async () => {
+                console.log('📚 Starting exam initialization...');
+                
+                try {
+                    // Update loading message
+                    const loadingElement = document.getElementById('examLoading');
+                    if (loadingElement) {
+                        loadingElement.innerHTML = `
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Preparing ${examType.toUpperCase()} exam...</p>
+                            <small style="color: #666;">Loading questions and setting up interface...</small>
+                        `;
+                    }
+                    
+                    // Debug: Test questions loading first
+                    console.log('🔍 Testing questions loading...');
+                    const questionsResult = await questionsManager.getAllQuestions();
+                    console.log('📊 Questions result:', questionsResult);
+                    
+                    if (!questionsResult.success) {
+                        throw new Error('Questions loading failed: ' + questionsResult.error);
+                    }
+                    
+                    if (!questionsResult.questions || questionsResult.questions.length === 0) {
+                        throw new Error('No questions available in database');
+                    }
+                    
+                    console.log(`✅ Found ${questionsResult.questions.length} questions`);
+                    
+                    // Update loading message
+                    if (loadingElement) {
+                        loadingElement.innerHTML = `
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Starting ${examType.toUpperCase()} exam...</p>
+                            <small style="color: #666;">Questions loaded successfully!</small>
+                        `;
+                    }
+                    
+                    // Start the exam directly
+                    console.log('🚀 Calling examManager.initiateExam...');
+                    await examManager.initiateExam(examType);
+                    console.log('✅ Exam initiated successfully');
+                    
+                } catch (error) {
+                    console.error('❌ Failed to initialize exam:', error);
+                    
+                    // Show error message
+                    const loadingElement = document.getElementById('examLoading');
+                    if (loadingElement) {
+                        loadingElement.innerHTML = `
+                            <div style="text-align: center; padding: 2rem;">
+                                <i class="fas fa-exclamation-triangle" style="color: #f44336; font-size: 3rem; margin-bottom: 1rem;"></i>
+                                <h3 style="color: #f44336; margin-bottom: 1rem;">Failed to Load Exam</h3>
+                                <p style="color: #666; margin-bottom: 1rem;">${error.message}</p>
+                                <button class="btn btn-primary" onclick="window.location.href='index.html'" style="margin-right: 1rem;">
+                                    <i class="fas fa-home"></i> Back to Home
+                                </button>
+                                <button class="btn btn-secondary" onclick="window.location.reload()">
+                                    <i class="fas fa-refresh"></i> Try Again
+                                </button>
+                            </div>
+                        `;
+                    }
+                }
+            };
+            
+            // Wait for DOM to be ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', startExam);
+            } else {
+                // DOM already loaded
+                startExam();
+            }
+            
+            // Fallback: If exam doesn't start in 10 seconds, show manual start option
+            setTimeout(() => {
+                const loadingElement = document.getElementById('examLoading');
+                if (loadingElement && loadingElement.style.display !== 'none') {
+                    console.log('⚠️ Exam taking too long to load, showing manual start option');
+                    loadingElement.innerHTML = `
+                        <div style="text-align: center; padding: 2rem;">
+                            <i class="fas fa-clock" style="color: #ff9800; font-size: 3rem; margin-bottom: 1rem;"></i>
+                            <h3 style="color: #ff9800; margin-bottom: 1rem;">Exam Loading...</h3>
+                            <p style="color: #666; margin-bottom: 1rem;">Taking longer than expected</p>
+                            <button class="btn btn-primary" onclick="window.examManager.initiateExam('${examType}')" style="margin-right: 1rem;">
+                                <i class="fas fa-play"></i> Start Exam Manually
+                            </button>
+                            <button class="btn btn-secondary" onclick="window.location.reload()">
+                                <i class="fas fa-refresh"></i> Refresh Page
+                            </button>
+                        </div>
+                    `;
+                }
+            }, 10000);
+            
+        } else {
+            // No exam type specified, redirect to home
+            console.log('❌ No exam type specified, redirecting to home');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html> 

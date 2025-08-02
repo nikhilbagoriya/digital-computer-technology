@@ -1,0 +1,49 @@
+// Clear all cookies and storage
+function clearAllUserData() {
+    try {
+        // Clear localStorage
+        localStorage.clear();
+        
+        // Clear sessionStorage
+        sessionStorage.clear();
+        
+        // Clear all cookies
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        }
+        
+        // Force clear Firebase auth state
+        if (firebase && firebase.auth) {
+            firebase.auth().signOut();
+        }
+        
+        // Clear IndexedDB
+        const databases = window.indexedDB.databases();
+        databases.then((dbs) => {
+            dbs.forEach((db) => {
+                window.indexedDB.deleteDatabase(db.name);
+            });
+        });
+        
+        console.log("✅ All user data cleared successfully!");
+        
+        // Reload page after 2 seconds
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 2000);
+        
+    } catch (error) {
+        console.error("Error clearing data:", error);
+    }
+}
+
+// Auto-execute after 5 minutes
+setTimeout(() => {
+    clearAllUserData();
+}, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+console.log("🔄 Auto-clear scheduled for 5 minutes...");

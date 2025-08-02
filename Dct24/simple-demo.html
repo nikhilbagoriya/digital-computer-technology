@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Demo Test - Dct24</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- icon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 90%;
+            overflow: hidden;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .demo-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .demo-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-header p {
+            opacity: 0.9;
+        }
+
+        .timer-section {
+            background: #f8f9fa;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        .question-counter {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .demo-content {
+            padding: 2rem;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #667eea;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .options {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 1rem;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-section {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            position: relative;
+        }
+
+        .score-pass {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .score-fail {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+        }
+
+        .result-details {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #dee2e6;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .score-stat .stat-icon { color: #667eea; }
+        .percentage-stat .stat-icon { color: #28a745; }
+        .time-stat .stat-icon { color: #17a2b8; }
+
+        .result-message-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #28a745;
+        }
+
+        .result-message-container.fail {
+            border-left-color: #dc3545;
+        }
+
+        .result-message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #495057;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .result-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Question Summary Styles */
+        .summary-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .summary-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .summary-header {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .summary-body {
+            padding: 2rem;
+        }
+
+        .question-review {
+            margin-bottom: 2rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .question-review.correct {
+            border-color: #28a745;
+            background: #f8fff8;
+        }
+
+        .question-review.incorrect {
+            border-color: #dc3545;
+            background: #fff8f8;
+        }
+
+        .question-review-header {
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-review.correct .question-review-header {
+            background: #d4edda;
+            border-bottom-color: #c3e6cb;
+        }
+
+        .question-review.incorrect .question-review-header {
+            background: #f8d7da;
+            border-bottom-color: #f5c6cb;
+        }
+
+        .question-number-badge {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .question-review-content {
+            padding: 1.5rem;
+        }
+
+        .question-text-review {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .options-review {
+            display: grid;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .option-review {
+            padding: 0.8rem 1rem;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            position: relative;
+        }
+
+        .option-review.correct-answer {
+            border-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .option-review.user-answer {
+            border-color: #ffc107;
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .option-review.user-wrong {
+            border-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .option-label {
+            position: absolute;
+            top: -8px;
+            right: 8px;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .correct-label {
+            background: #28a745;
+            color: white;
+        }
+
+        .wrong-label {
+            background: #dc3545;
+            color: white;
+        }
+
+        .your-answer-label {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .summary-footer {
+            padding: 1.5rem 2rem;
+            background: #f8f9fa;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .close-summary {
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .close-summary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes celebration {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-50%) scale(0.5) rotateY(180deg); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: translateX(-50%) scale(1.2) rotateY(0deg); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateX(-50%) scale(1) rotateY(-180deg); 
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f39c12;
+            animation: confetti 3s linear infinite;
+        }
+
+        @media (max-width: 480px) {
+            .result-section,.result-details{
+                padding: 0.5rem !important;
+            }
+            .result-stats{
+                display: flex;
+                gap: auto !important;
+            }
+            .score-circle{
+                width: 120px !important;
+                height: 120px !important;
+                margin: 0 auto 1rem !important;
+            }
+            .demo-content{
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            .question-card{
+                padding: 1rem !important;
+                margin-bottom: 0rem !important;
+            }
+            .question-text{
+                font-size: 1rem !important;
+                margin-bottom: 0.8rem !important;
+            }
+            .demo-header p{
+                font-size: 0.8rem !important;
+            }
+            .timer{
+                font-size: 1rem !important;
+            }
+            .timer-section{
+                padding: 0.8rem 1rem !important;
+            }
+            .option{
+                font-size: 0.7rem !important;
+            }
+            .options{
+                gap: 0.5rem !important;
+            }
+            .demo-header h1{
+                font-size: 1.6rem !important;
+            }
+            .demo-header{
+                padding: 1.5rem 0.5rem !important;
+            }
+            .stat-item{
+                padding: 0.80rem !important;
+            }
+            .stat-label{
+                font-size: 0.6rem;
+            }
+            .stat-value{
+                font-size: 1rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                width: 95%;
+                margin: 1rem;
+            }
+            
+            .demo-content {
+                padding: 1rem;
+            }
+            
+            .navigation {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            /* Mobile responsive for summary */
+            .summary-modal {
+                padding: 1rem;
+            }
+
+            .summary-content {
+                margin: 0;
+                max-height: 95vh;
+            }
+
+            .summary-header {
+                padding: 1.5rem;
+            }
+
+            .summary-body {
+                padding: 1rem;
+            }
+
+            .question-review-header {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .question-text-review {
+                font-size: 1rem;
+            }
+
+            .option-review {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .option-label {
+                position: static;
+                display: inline-block;
+                margin-top: 0.5rem;
+            }
+
+            /* Mobile responsive for result stats */
+            .result-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stat-item {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .result-message-container {
+                padding: 1.5rem;
+            }
+
+            .result-emoji {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Header -->
+        <div class="demo-header">
+            <h1><i class="fas fa-graduation-cap"></i> RS-CIT Demo Test</h1>
+            <p>5 Quick Questions - RS-CIT Syllabus Based</p>
+        </div>
+
+        <!-- Timer Section -->
+        <div class="timer-section">
+            <div class="timer">
+                <i class="fas fa-clock"></i> <span id="timer">05:00</span>
+            </div>
+            <div class="question-counter">
+                Question <span id="currentQ">1</span> of 5
+            </div>
+        </div>
+
+        <!-- Test Content -->
+        <div id="testContent" class="demo-content">
+            <div class="question-card">
+                <div class="question-text" id="questionText">
+                    Loading question...
+                </div>
+                <div class="options" id="optionsContainer">
+                    <!-- Options will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="btn btn-secondary" id="prevBtn" disabled>
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button class="btn btn-success" id="submitBtn" style="display: none;">
+                <i class="fas fa-check"></i> Submit Test
+            </button>
+            <button class="btn btn-primary" id="nextBtn">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Result Section (Hidden initially) -->
+        <div id="resultSection" class="result-section hidden">
+            <div class="score-circle" id="scoreCircle">
+                <span id="scoreText">0%</span>
+            </div>
+            <h2 id="resultTitle">Test Complete!</h2>
+            <div class="result-details">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="restartTest()">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+                <button class="btn btn-success" onclick="showQuestionSummary()" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+                    <i class="fas fa-list-alt"></i> Question Summary
+                </button>
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo Test Questions Pool (Total 20 RS-CIT Questions)
+        const allQuestions = [
+            {
+                question: "RS-CIT में कंप्यूटर का full form क्या है?",
+                options: [
+                    "Common Operating Machine Particularly Used for Trade Education and Research",
+                    "Commonly Operated Machine Particularly Used for Technical Education and Research", 
+                    "Computer Operated Machine Particularly Used for Technical Education and Research",
+                    "Common Oriented Machine Particularly Used for Trade Education and Research"
+                ],
+                correct: 0
+            },
+            {
+                question: "MS Excel में cell का address कैसे बनता है?",
+                options: [
+                    "Row + Column",
+                    "Column + Row",
+                    "Column Number + Row Number", 
+                    "Row Number + Column Number"
+                ],
+                correct: 1
+            },
+            {
+                question: "Windows 10 में कौन सा file system use होता है?",
+                options: [
+                    "FAT32",
+                    "NTFS",
+                    "EXT4", 
+                    "HFS+"
+                ],
+                correct: 1
+            },
+            {
+                question: "PowerPoint में Slide Show कैसे start करते हैं?",
+                options: [
+                    "F4 key",
+                    "F5 key",
+                    "F6 key",
+                    "F7 key"
+                ],
+                correct: 1
+            },
+            {
+                question: "Internet browser में bookmark save करने के लिए कौन सा shortcut use करते हैं?",
+                options: [
+                    "Ctrl + B",
+                    "Ctrl + D",
+                    "Ctrl + S",
+                    "Ctrl + M"
+                ],
+                correct: 1
+            },
+            {
+                question: "MS Word में text को bold करने के लिए कौन सा shortcut है?",
+                options: [
+                    "Ctrl + I",
+                    "Ctrl + B",
+                    "Ctrl + U",
+                    "Ctrl + A"
+                ],
+                correct: 1
+            },
+            {
+                question: "Email का full form क्या है?",
+                options: [
+                    "Electronic Mail",
+                    "Electrical Mail",
+                    "Electronic Message",
+                    "Electric Mail"
+                ],
+                correct: 0
+            },
+            {
+                question: "RAM का full form क्या है?",
+                options: [
+                    "Read Access Memory",
+                    "Random Access Memory",
+                    "Rapid Access Memory",
+                    "Ready Access Memory"
+                ],
+                correct: 1
+            },
+            {
+                question: "CD-ROM का full form क्या है?",
+                options: [
+                    "Compact Disk Read Only Memory",
+                    "Computer Disk Read Only Memory",
+                    "Common Disk Read Only Memory",
+                    "Control Disk Read Only Memory"
+                ],
+                correct: 0
+            },
+            {
+                question: "MS Excel में formula हमेशा किस symbol से start होता है?",
+                options: [
+                    "@",
+                    "=",
+                    "#",
+                    "$"
+                ],
+                correct: 1
+            },
+            {
+                question: "Internet में WWW का full form क्या है?",
+                options: [
+                    "World Wide Web",
+                    "World Wide Window",
+                    "World Wide Work",
+                    "World Wide Wire"
+                ],
+                correct: 0
+            },
+            {
+                question: "Windows में taskbar कहाँ स्थित होता है?",
+                options: [
+                    "Screen के top पर",
+                    "Screen के bottom पर",
+                    "Screen के left पर",
+                    "Screen के right पर"
+                ],
+                correct: 1
+            },
+            {
+                question: "MS PowerPoint में new slide add करने का shortcut क्या है?",
+                options: [
+                    "Ctrl + N",
+                    "Ctrl + M",
+                    "Ctrl + S",
+                    "Ctrl + A"
+                ],
+                correct: 1
+            },
+            {
+                question: "कंप्यूटर में data store करने की सबसे छोटी unit कौन सी है?",
+                options: [
+                    "Byte",
+                    "Bit",
+                    "KB",
+                    "MB"
+                ],
+                correct: 1
+            },
+            {
+                question: "USB का full form क्या है?",
+                options: [
+                    "Universal Serial Bus",
+                    "United Serial Bus",
+                    "Universal System Bus",
+                    "United System Bus"
+                ],
+                correct: 0
+            },
+            {
+                question: "MS Word में text को copy करने का shortcut क्या है?",
+                options: [
+                    "Ctrl + X",
+                    "Ctrl + C",
+                    "Ctrl + V",
+                    "Ctrl + Z"
+                ],
+                correct: 1
+            },
+            {
+                question: "Computer virus क्या है?",
+                options: [
+                    "Hardware problem",
+                    "Software problem",
+                    "Malicious program",
+                    "Network error"
+                ],
+                correct: 2
+            },
+            {
+                question: "1 GB में कितने MB होते हैं?",
+                options: [
+                    "1000 MB",
+                    "1024 MB",
+                    "1048 MB",
+                    "1064 MB"
+                ],
+                correct: 1
+            },
+            {
+                question: "MS Excel में rows और columns का intersection क्या कहलाता है?",
+                options: [
+                    "Box",
+                    "Cell",
+                    "Range",
+                    "Field"
+                ],
+                correct: 1
+            },
+            {
+                question: "Internet connection की speed measure करने की unit क्या है?",
+                options: [
+                    "Mbps",
+                    "MHz",
+                    "GB",
+                    "KB"
+                ],
+                correct: 0
+            }
+        ];
+
+        // Randomly select 5 questions from the pool of 20
+        let questions = [];
+        
+        function selectRandomQuestions() {
+            const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+            questions = shuffled.slice(0, 5);
+            console.log('🎲 Selected 5 random questions from 20 total questions');
+        }
+
+        let currentQuestion = 0;
+        let answers = {};
+        let timeLeft = 300; // 5 minutes in seconds
+        let timerInterval;
+        let startTime = Date.now();
+
+        // Initialize test
+        function initTest() {
+            selectRandomQuestions(); // Select 5 random questions each time
+            loadQuestion();
+            startTimer();
+        }
+
+        // Load current question
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionText').textContent = q.question;
+            document.getElementById('currentQ').textContent = currentQuestion + 1;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => selectOption(index);
+                
+                if (answers[currentQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            updateNavigation();
+        }
+
+        // Select option
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            
+            // Update UI
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.toggle('selected', i === index);
+            });
+        }
+
+        // Update navigation buttons
+        function updateNavigation() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'inline-flex';
+            } else {
+                document.getElementById('nextBtn').style.display = 'inline-flex';
+                document.getElementById('submitBtn').style.display = 'none';
+            }
+        }
+
+        // Navigation functions
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            }
+        }
+
+        // Timer functions
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Change color when time is running out
+            if (timeLeft <= 60) {
+                document.getElementById('timer').style.color = '#dc3545';
+            }
+        }
+
+        // Submit test
+        function submitTest() {
+            clearInterval(timerInterval);
+            
+            // Calculate score
+            let correct = 0;
+            questions.forEach((q, index) => {
+                if (answers[index] === q.correct) {
+                    correct++;
+                }
+            });
+            
+            const percentage = Math.round((correct / questions.length) * 100);
+            const passed = percentage >= 60;
+            const timeTaken = Math.round((Date.now() - startTime) / 1000);
+            
+            // Show results
+            showResults(correct, percentage, passed, timeTaken);
+        }
+
+        // Show results
+        function showResults(correct, percentage, passed, timeTaken) {
+            document.getElementById('testContent').classList.add('hidden');
+            document.querySelector('.navigation').classList.add('hidden');
+            document.getElementById('resultSection').classList.remove('hidden');
+            
+            // Update result display
+            document.getElementById('scoreText').textContent = percentage + '%';
+            
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            const timeFormatted = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Create beautiful result stats
+            const resultDetails = document.querySelector('.result-details');
+            resultDetails.innerHTML = `
+                <div class="result-stats">
+                    <div class="stat-item score-stat">
+                        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="stat-label">Your Score</div>
+                        <div class="stat-value">${correct} / 5</div>
+                    </div>
+                    <div class="stat-item percentage-stat">
+                        <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                        <div class="stat-label">Percentage</div>
+                        <div class="stat-value">${percentage}%</div>
+                    </div>
+                    <div class="stat-item time-stat">
+                        <div class="stat-icon"><i class="fas fa-stopwatch"></i></div>
+                        <div class="stat-label">Time Taken</div>
+                        <div class="stat-value">${timeFormatted}</div>
+                    </div>
+                </div>
+                <div class="result-message-container ${passed ? '' : 'fail'}">
+                    <span class="result-emoji">${passed ? '🎉' : '📚'}</span>
+                    <p class="result-message" id="resultMessage">
+                        ${passed ? 
+                            'Great! You are ready for RS-CIT exam. Your basics are strong! Keep up the excellent work.' : 
+                            'Study RS-CIT syllabus more and practice regularly. You can improve with consistent effort!'
+                        }
+                    </p>
+                </div>
+            `;
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            const resultTitle = document.getElementById('resultTitle');
+            
+            if (passed) {
+                scoreCircle.className = 'score-circle score-pass';
+                resultTitle.innerHTML = '<i class="fas fa-medal"></i> Excellent Performance!';
+                createConfetti();
+            } else {
+                scoreCircle.className = 'score-circle score-fail';
+                resultTitle.innerHTML = '<i class="fas fa-book-reader"></i> Need More Practice!';
+            }
+        }
+
+        // Create confetti effect for RS-CIT success
+        function createConfetti() {
+            // Play success sound (if available)
+            try {
+                const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvGIhBSuTzuzaj0EKFmm98qiXNwkVY7jy3KdNGhBGoc3/');
+                audio.volume = 0.3;
+                audio.play().catch(() => {}); // Ignore errors
+            } catch (e) {}
+
+            // Create colorful confetti for RS-CIT celebration
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.backgroundColor = ['#FFD700', '#FF69B4', '#00BFFF', '#32CD32', '#FF6347', '#9370DB', '#20B2AA'][Math.floor(Math.random() * 7)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.zIndex = '9999';
+                    confetti.style.pointerEvents = 'none';
+                    confetti.style.animation = `confetti 4s linear forwards`;
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.remove();
+                        }
+                    }, 6000);
+                }, i * 50);
+            }
+            
+            // Add celebration text animation
+            const celebration = document.createElement('div');
+            celebration.style.cssText = `
+                position: fixed;
+                top: 20%;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 3rem;
+                font-weight: bold;
+                color: #FFD700;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                z-index: 10000;
+                animation: celebration 3s ease-in-out forwards;
+                pointer-events: none;
+            `;
+            celebration.textContent = '🏆 RS-CIT READY! 🎯';
+            document.body.appendChild(celebration);
+            
+            setTimeout(() => {
+                if (celebration.parentNode) {
+                    celebration.remove();
+                }
+            }, 3000);
+        }
+
+        // Show detailed question summary
+        function showQuestionSummary() {
+            console.log('📋 Showing question summary...');
+            
+            let summaryHTML = `
+                <div class="summary-modal" id="summaryModal">
+                    <div class="summary-content">
+                        <div class="summary-header">
+                            <h2><i class="fas fa-clipboard-list"></i> Question Summary</h2>
+                            <p>Detailed review of all questions with correct answers</p>
+                        </div>
+                        <div class="summary-body">
+            `;
+
+            questions.forEach((question, index) => {
+                const userAnswer = answers[index];
+                const isCorrect = userAnswer === question.correct;
+                const statusClass = isCorrect ? 'correct' : 'incorrect';
+                const statusText = isCorrect ? 'Correct' : 'Incorrect';
+                const statusIcon = isCorrect ? 'fas fa-check-circle' : 'fas fa-times-circle';
+                
+                summaryHTML += `
+                    <div class="question-review ${statusClass}">
+                        <div class="question-review-header">
+                            <span class="question-number-badge">Question ${index + 1}</span>
+                            <span class="status-badge ${isCorrect ? 'status-correct' : 'status-incorrect'}">
+                                <i class="${statusIcon}"></i> ${statusText}
+                            </span>
+                        </div>
+                        <div class="question-review-content">
+                            <div class="question-text-review">${question.question}</div>
+                            <div class="options-review">
+                `;
+
+                question.options.forEach((option, optIndex) => {
+                    let optionClass = '';
+                    let labelHTML = '';
+                    
+                    if (optIndex === question.correct && optIndex === userAnswer) {
+                        // User selected correct answer
+                        optionClass = 'correct-answer';
+                        labelHTML = '<span class="option-label correct-label">✓ Correct</span>';
+                    } else if (optIndex === question.correct) {
+                        // This is the correct answer but user didn't select it
+                        optionClass = 'correct-answer';
+                        labelHTML = '<span class="option-label correct-label">✓ Correct Answer</span>';
+                    } else if (optIndex === userAnswer) {
+                        // User selected this wrong answer
+                        optionClass = 'user-wrong';
+                        labelHTML = '<span class="option-label wrong-label">✗ Your Answer</span>';
+                    } else {
+                        // Normal option
+                        optionClass = '';
+                    }
+                    
+                    summaryHTML += `
+                        <div class="option-review ${optionClass}">
+                            ${option}
+                            ${labelHTML}
+                        </div>
+                    `;
+                });
+
+                summaryHTML += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            summaryHTML += `
+                        </div>
+                        <div class="summary-footer">
+                            <button class="close-summary" onclick="closeSummary()">
+                                <i class="fas fa-times"></i> Close Summary
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add to body
+            document.body.insertAdjacentHTML('beforeend', summaryHTML);
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close question summary
+        function closeSummary() {
+            const modal = document.getElementById('summaryModal');
+            if (modal) {
+                modal.remove();
+            }
+            document.body.style.overflow = 'auto';
+        }
+
+        // Restart test with new random questions
+        function restartTest() {
+            currentQuestion = 0;
+            answers = {};
+            timeLeft = 300;
+            startTime = Date.now();
+            
+            document.getElementById('testContent').classList.remove('hidden');
+            document.querySelector('.navigation').classList.remove('hidden');
+            document.getElementById('resultSection').classList.add('hidden');
+            
+            // Close summary if open
+            closeSummary();
+            
+            // Select new random questions for restart
+            selectRandomQuestions();
+            initTest();
+        }
+
+        // Event listeners
+        document.getElementById('prevBtn').onclick = prevQuestion;
+        document.getElementById('nextBtn').onclick = nextQuestion;
+        document.getElementById('submitBtn').onclick = submitTest;
+
+        // Prevent accidental page refresh
+        window.addEventListener('beforeunload', (e) => {
+            if (!document.getElementById('resultSection').classList.contains('hidden')) {
+                return; // Don't show warning if test is complete
+            }
+            e.preventDefault();
+            e.returnValue = '';
+        });
+
+        // Initialize test when page loads
+        window.onload = initTest;
+    </script>
+</body>
+</html> 

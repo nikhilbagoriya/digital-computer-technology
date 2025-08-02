@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login</title>
+
+    <!-- icon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    
+</head>
+<body>
+    <h2>Test Login</h2>
+    <form id="testForm">
+        <input type="email" id="testEmail" placeholder="Email" value="digitalcomputer1808@gmail.com">
+        <input type="password" id="testPassword" placeholder="Password" value="Digital@2025">
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script type="module">
+        import authManager from './js/auth.js';
+        
+        document.getElementById('testForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+            const output = document.getElementById('output');
+            
+            console.log('Attempting login with:', { email, password });
+            output.innerHTML = 'Logging in...';
+            
+            try {
+                const result = await authManager.signIn(email, password);
+                console.log('Login result:', result);
+                
+                if (result.success) {
+                    output.innerHTML = `
+                        <h3>Login Successful!</h3>
+                        <p>User: ${result.user.email}</p>
+                        <p>Is Admin: ${authManager.isAdmin()}</p>
+                        <p>Demo Mode: ${result.user.uid.includes('demo') ? 'Yes' : 'No'}</p>
+                    `;
+                } else {
+                    output.innerHTML = `
+                        <h3>Login Failed</h3>
+                        <p>Error: ${result.error}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                output.innerHTML = `
+                    <h3>Login Error</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        });
+        
+        // Check initial auth state
+        console.log('Current user:', authManager.getCurrentUser());
+        console.log('Auth manager:', authManager);
+    </script>
+</body>
+</html> 

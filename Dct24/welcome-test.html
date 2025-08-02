@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Modal Test - Dct24</title>
+
+    <!-- icon -->
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            max-width: 600px;
+        }
+        h1 { 
+            font-size: 2.5rem; 
+            margin-bottom: 20px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        p { 
+            font-size: 1.2rem; 
+            line-height: 1.6; 
+            margin-bottom: 30px; 
+        }
+        .features {
+            text-align: left;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .features li {
+            margin: 10px 0;
+            padding: 8px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: #f8f9fa;
+        }
+        .shortcuts {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Welcome Modal Test</h1>
+        <p><strong>Welcome popup ab sirf first time dikhega website khulne par!</strong></p>
+        
+        <div class="status" id="status">
+            Checking welcome modal status...
+        </div>
+        
+        <h3>✨ Features:</h3>
+        <ul class="features">
+            <li>🎯 Welcome modal shows only once per browser session</li>
+            <li>🚫 Won't show again on refresh or revisit</li>
+            <li>⭐ "Don't Show Again" option to permanently disable</li>
+            <li>🔧 Admin shortcuts to reset settings for testing</li>
+            <li>💾 Settings stored in localStorage</li>
+        </ul>
+        
+        <div style="margin: 30px 0;">
+            <a href="index.html" class="btn">🏠 Go to Main Website</a>
+            <button onclick="testReset()" class="btn">🔄 Reset Welcome (Test)</button>
+            <button onclick="checkStatus()" class="btn">📊 Check Status</button>
+        </div>
+        
+        <div class="shortcuts">
+            <strong>🎮 Admin Shortcuts:</strong><br>
+            <strong>Ctrl+Shift+W</strong> = Reset Welcome Modal<br>
+            <strong>Ctrl+Shift+R</strong> = Reset Reload Confirmation<br><br>
+            <em>Use these shortcuts on main website for testing</em>
+        </div>
+    </div>
+    
+    <script>
+        function testReset() {
+            localStorage.removeItem('disableWelcomeModal');
+            localStorage.removeItem('welcomeModalShown');
+            
+            alert('✅ Welcome modal reset!\n\nVisit main site to see welcome popup again.');
+            checkStatus();
+        }
+        
+        function checkStatus() {
+            const disableWelcome = localStorage.getItem('disableWelcomeModal');
+            const welcomeShown = localStorage.getItem('welcomeModalShown');
+            
+            const statusDiv = document.getElementById('status');
+            
+            if (disableWelcome === 'true') {
+                statusDiv.innerHTML = '🚫 <strong>Permanently Disabled</strong> - User chose "Don\'t Show Again"';
+                statusDiv.style.background = 'rgba(231, 76, 60, 0.3)';
+            } else if (welcomeShown === 'true') {
+                statusDiv.innerHTML = '✅ <strong>Already Shown</strong> - Won\'t show again this session';
+                statusDiv.style.background = 'rgba(241, 196, 15, 0.3)';
+            } else {
+                statusDiv.innerHTML = '🎉 <strong>Ready to Show</strong> - Will appear on next visit';
+                statusDiv.style.background = 'rgba(46, 204, 113, 0.3)';
+            }
+        }
+        
+        // Check status on page load
+        window.onload = checkStatus;
+    </script>
+</body>
+</html> 
